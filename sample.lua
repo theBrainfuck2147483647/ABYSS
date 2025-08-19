@@ -1,88 +1,125 @@
---https://github.com/GhostDuckyy/UI-Libraries/blob/main/Neverlose/Example.lua
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostDuckyy/UI-Libraries/main/Neverlose/source.lua"))()
--- Toggle UI: Library:Toggle()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/theBrainfuck2147483647/abyss.sex/refs/heads/main/ui.lua"))()
 
-local Window = Library:Window({
-    text = "Window"
-})
+local Window = library:CreateWindow("cattoware UI", Vector2.new(492, 598), Enum.KeyCode.Delete)
 
-local TabSection = Window:TabSection({
-    text = "TabSection"
-})
+local combat = Window:CreateTab("combat")
+local visuals = Window:CreateTab("visuals")
+local misc = Window:CreateTab("misc")
+local settings = Window:CreateTab("settings")
 
-local Tab = TabSection:Tab({
-    text = "Tab",
-    icon = "rbxassetid://7999345313",
-})
+-- // Combat Tab
+local silentaim = combat:CreateSector("silent aim", "left")
+silentaim:AddToggle("enable", false, function(state)
+end)
 
-local Section = Tab:Section({
-    text = "Section"
-})
+silentaim:AddSlider("hit chance", 0, 50, 100, 1, function(val)
+end)
 
-Section:Button({
-    text = "Button",
-    callback = function()
-        print("Clicked button")
-    end,
-})
+silentaim:AddSlider("max distance", 0, 1000, 10000, 1, function(val)  
+end)
 
-Section:Toggle({
-    text = "Toggle",
-    state = false, -- Default boolean
-    callback = function(boolean)
-        print("Toggle current: ",boolean)
+silentaim:AddDropdown("hit part", {"Head", "Torso", "Random"}, "Head", false, function(dropdown)
+    if dropdown == "Head" then
+    elseif dropdown == "Torso" then
+    elseif dropdown == "Random" then
     end
-})
+end)
 
-Section:Slider({
-    text = "Slider",
-    min = 10,
-    max = 100,
-    -- [[Float = 0,]] Idk what it does
-    callback = function(number)
-        print(number)
+
+local fovcircle = combat:CreateSector("fov circle", "right")
+fovcircle:AddToggle("enable", false, function(state)
+end)
+
+fovcircle:AddSlider("radius", 0, 90, 360, 1, function(val)
+end)
+
+fovcircle:AddSlider("sides", 0, 60, 90, 1, function(val)
+end)
+
+
+local gunmods = combat:CreateSector("gun mods", "right")
+gunmods:AddToggle("no recoil", false, function(state)
+end)
+
+gunmods:AddToggle("no spread", false, function(state)
+end)
+
+gunmods:AddToggle("no drop", false, function(state)
+end)
+
+
+
+
+-- // Visuals tab
+local playeresp = visuals:CreateSector("player esp", "left")
+
+playeresp:AddToggle("enable", false, function(state)
+end)
+
+local nameesp = playeresp:AddToggle("name", false, "esp1",  function(state)
+
+end)
+nameesp:AddColorpicker(Color3.fromRGB(255, 255, 255), function(value)
+end)
+
+local boxesp = playeresp:AddToggle("box", false, function(state)
+end)
+boxesp:AddColorpicker(Color3.fromRGB(255, 0, 0), function(value)
+end)
+
+local hbesp = playeresp:AddToggle("healthbar", false, function(state)
+end)
+hbesp:AddColorpicker(Color3.fromRGB(0, 255, 0), function(value)
+end)
+
+local htesp = playeresp:AddToggle("healthtext", false, function(state)
+end)
+htesp:AddColorpicker(Color3.fromRGB(255, 255, 255), function(value)
+end)
+
+local distesp = playeresp:AddToggle("distance", false, function(state)
+end)
+distesp:AddColorpicker(Color3.fromRGB(255, 255, 255), function(value)
+end)
+
+local traceresp = playeresp:AddToggle("tracers", false, function(state)
+end)
+traceresp:AddColorpicker(Color3.fromRGB(255, 255, 255), function(value)
+end)
+
+playeresp:AddLabel("          settings")
+playeresp:AddToggle("team check", false, function(state)
+end)
+playeresp:AddToggle("visible check", false, function(state)
+end)
+
+
+
+
+-- // Settings section
+local menusec = settings:CreateSector("menu settings", "left")
+menusec:AddKeybind("keybind", Enum.KeyCode.Delete, false, "boxesp", function(key)
+end)
+
+menusec:AddColorpicker("accent color", library.theme.accentcolor, function(ztx)
+    library.theme.accentcolor = ztx
+    library.theme.accentcolor2 = ztx
+end)
+
+menusec:AddColorpicker("background color", Color3.fromRGB(20, 20, 20), function(ztx)
+end)
+
+menusec:AddDropdown("background image", {"Floral", "Flowers", "Circles", "Hearts", "Hexagons"}, "Floral", false, function(dropdown)
+    if dropdown == "Floral" then
+    elseif dropdown == "Flowers" then
+    elseif dropdown == "Circles" then
+    elseif dropdown == "Hearts" then
+    elseif dropdown == "Hexagons" then
     end
-})
+end)
 
-Section:Dropdown({
-    text = "Dropdown",
-    list = {"Apple", "Banana","Coconut"},
-    default = "Apple",
-    callback = function(String)
-        print(String)
-    end
-})
+menusec:AddSlider("tile size", 0, 90, 200, 1, function(val)
+    library.theme.tilesize = val
+end)
 
-Section:Textbox({
-    text = "Textbox",
-    value = "Default",
-    callback = function(String)
-        print(String)
-    end
-})
-
-Section:Colorpicker({
-    text = "Colorpicker",
-    color = Color3.new(1,1,1),
-    callback = function(HSV)
-        print(HSV)
-    end
-})
-
---[[
-    blacklisted keybind:
-        Return
-        Space
-        Tab
-        W,A,S,D,I,O
-        Unknown
-]]
-
-Section:Keybind({
-    text = "Keybind",
-    default = Enum.KeyCode.Z,
-    callback = function(defaultBind)
-        print("Triggered keybind")
-        print(defaultBind)
-    end
-})
+settings:CreateConfigSystem("right")
